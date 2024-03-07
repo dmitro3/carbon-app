@@ -13,7 +13,7 @@
 
 # CarbonDeFi webapp
 
-Carbon DeFi is an advanced onchain trading protocol enabling automated limit orders, efficiently adjustable with custom price ranges, grid trading like recurring orders, works like a DEX trading bot.
+Carbon DeFi is an advanced on-chain trading protocol enabling automated limit orders, efficiently adjustable with custom price ranges, grid trading like recurring orders, works like a DEX trading bot.
 
 # Setup
 
