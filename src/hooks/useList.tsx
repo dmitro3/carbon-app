@@ -1,5 +1,5 @@
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import { useContext, createContext, useCallback } from 'react';
+import { useContext, createContext, useCallback, ReactNode } from 'react';
 
 interface SortParams {
   sortBy: string;
@@ -11,7 +11,7 @@ interface PaginationParams {
 }
 type ListParams<P> = Partial<P> & SortParams & PaginationParams;
 
-interface ListContextType<T, P> {
+interface ListContextType<T = unknown, P = unknown> {
   all: T[];
   list: T[];
   size: number;
@@ -19,13 +19,7 @@ interface ListContextType<T, P> {
   setSearchParams: (searchParams: Partial<ListParams<P>>) => any;
 }
 
-const ListContext = createContext<ListContextType<any, any>>({
-  all: [],
-  list: [],
-  size: 0,
-  searchParams: { limit: Infinity, offset: 0, sortBy: '', order: 'asc' },
-  setSearchParams: () => {},
-});
+const ListContext = createContext<ListContextType | undefined>(undefined);
 
 export interface ListOptions<T, P> {
   all: T[];
@@ -36,7 +30,7 @@ export interface ListOptions<T, P> {
 }
 
 interface ListProviderProps<T, P> extends ListOptions<T, P> {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function ListProvider<T, P>(props: ListProviderProps<T, P>) {
@@ -97,8 +91,8 @@ export function ListProvider<T, P>(props: ListProviderProps<T, P>) {
   return <ListContext.Provider value={ctx}>{children}</ListContext.Provider>;
 }
 
-export function useList<T = unknown, P = unknown>(): ListContextType<T, P> {
-  const ctx = useContext(ListContext) as any;
+export function useList() {
+  const ctx = useContext(ListContext);
   if (!ctx) {
     throw new Error('useList/usePagination must be used within a ListProvider');
   }
